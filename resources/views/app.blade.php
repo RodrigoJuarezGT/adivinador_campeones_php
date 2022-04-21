@@ -19,7 +19,7 @@
     </head>
     <body>
 
-        @yield('content')
+sdf
 
         @livewireScripts
     </body>
