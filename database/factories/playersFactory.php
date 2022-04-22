@@ -16,11 +16,13 @@ class PlayersFactory extends Factory
      */
     public function definition()
     {
+        $countries=array("Alemani","Brazil","Espana","Japon","USA","Italia","Francia","Argentina");
+        $clubs=array("Barcelona", "Real Madrid", "Manchester", "PSG");
         return [
-            'age' => rand(19,35),
-            'name' => $this->faker->word(),
-            'club' => $this->faker->word(),
-            'country' => $this->faker->word(),
+            'age' => rand(19,25),
+            'name' => $this->faker->word(). ' ' . $this->faker->word(),
+            'club' => $clubs[array_rand($clubs,1)],
+            'country' => $countries[array_rand($countries,1)],
             'position' => $this->faker->word(),
         ];
     }

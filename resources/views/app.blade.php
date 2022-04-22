@@ -19,7 +19,15 @@
     </head>
     <body>
 
-sdf
+        @livewire('adivinador')
+
+        <form action="{{ route('app') }}" method="get">
+
+            <input type="text" name="country">
+
+            @csrf
+            @method('get')
+        </form>
 
         @livewireScripts
     </body>
