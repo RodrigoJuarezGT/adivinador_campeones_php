@@ -25,6 +25,8 @@ body {
     width: 100%;
     font-size: 23px;
     margin-top: 20px;
+    border-radius: 19px;
+    padding: 5px 20px;
 }
 
 .card {
