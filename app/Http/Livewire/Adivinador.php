@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\players;
+use App\Models\Results;
 use App\Models\answers;
 use Illuminate\Http\Request;
 
@@ -13,12 +14,31 @@ class Adivinador extends Component
     {
         $array_answers = answers::where('id', 1)->get();
         $answers = $array_answers[0];
-        $question = 'Pais';
+        $question = 'Nacionalidad';
         $player_name = '';
-        $guessed = false;
 
         if($request->answer == 'si'){
-            $guessed = true;
+                $player_to_save = players::where('country', $answers->country)->
+                    where('age', $answers->age)->
+                    where('club', $answers->club)->
+                    where('position', $answers->position)->get();
+
+                $result = Results::create([
+                    'name' => $player_to_save[0]->name,
+                    'age' => $player_to_save[0]->age,
+                    'country' => $player_to_save[0]->country,
+                    'club' => $player_to_save[0]->club,
+                    'position' => $player_to_save[0]->position,
+                    'result' => 'si',
+                ]);
+                $result->save();
+
+                $answers->country = null;
+                $answers->club = null;
+                $answers->age = null;
+                $answers->position = null;
+                $answers->save();
+
         }else{
             if($request->answer && !$answers->country){
                 $answers->country = $request->answer;
@@ -38,13 +58,10 @@ class Adivinador extends Component
                     where('club', $answers->club)->
                     where('position', $answers->position)->get();
 
+
                 $player_name = $player[0]->name;
 
                 // dd($player);
-                $answers->country = null;
-                $answers->club = null;
-                $answers->age = null;
-                $answers->position = null;
             }
             $answers->save();
         }
@@ -54,7 +71,6 @@ class Adivinador extends Component
             'answers' => $answers[0],
             'question' => $question,
             'player_name' => $player_name,
-            'guessed' => $guessed,
             ]);
     }
 }
