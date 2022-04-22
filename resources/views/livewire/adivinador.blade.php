@@ -1,7 +1,3 @@
 <div>
-  @foreach($players as $player)
-
-  {{ $player->name }}
-    <br>
-  @endforeach
+¿{{ $question }} del jugador?
 </div>

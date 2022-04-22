@@ -19,15 +19,19 @@
     </head>
     <body>
 
-        @livewire('adivinador')
+        <div class="card">
+            @livewire('adivinador')
+            <div>
+                <form action="{{ route('app') }}" method="get">
 
-        <form action="{{ route('app') }}" method="get">
+                    <input type="text" name="answer" id="answer_camp" autofocus>
 
-            <input type="text" name="country">
+                    @csrf
+                    @method('get')
+                </form>
+            </div>
+        </div>
 
-            @csrf
-            @method('get')
-        </form>
 
         @livewireScripts
     </body>
