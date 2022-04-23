@@ -20,6 +20,7 @@
     <body>
 
         <div class="card">
+            <h3>Adivinador de Campeones</h3>
             @livewire('adivinador')
             <div>
                 <form action="{{ route('app') }}" method="get">

@@ -18,27 +18,48 @@ class Adivinador extends Component
         $player_name = '';
 
         if($request->answer == 'si'){
-                $player_to_save = players::where('country', $answers->country)->
-                    where('age', $answers->age)->
-                    where('club', $answers->club)->
-                    where('position', $answers->position)->get();
+            $player_to_save = players::where('country', $answers->country)->
+                where('age', $answers->age)->
+                where('club', $answers->club)->
+                where('position', $answers->position)->get();
 
-                $result = Results::create([
-                    'name' => $player_to_save[0]->name,
-                    'age' => $player_to_save[0]->age,
-                    'country' => $player_to_save[0]->country,
-                    'club' => $player_to_save[0]->club,
-                    'position' => $player_to_save[0]->position,
-                    'result' => 'si',
-                ]);
-                $result->save();
+            $result = Results::create([
+                'name' => $player_to_save[0]->name,
+                'age' => $player_to_save[0]->age,
+                'country' => $player_to_save[0]->country,
+                'club' => $player_to_save[0]->club,
+                'position' => $player_to_save[0]->position,
+                'result' => 'si',
+            ]);
+            $result->save();
 
-                $answers->country = null;
-                $answers->club = null;
-                $answers->age = null;
-                $answers->position = null;
-                $answers->save();
+            $answers->country = null;
+            $answers->club = null;
+            $answers->age = null;
+            $answers->position = null;
+            $answers->save();
 
+        }elseif ($request->answer == 'no') {
+            $player_to_save = players::where('country', $answers->country)->
+                where('age', $answers->age)->
+                where('club', $answers->club)->
+                where('position', $answers->position)->get();
+
+            $result = Results::create([
+                'name' => $player_to_save[0]->name,
+                'age' => $player_to_save[0]->age,
+                'country' => $player_to_save[0]->country,
+                'club' => $player_to_save[0]->club,
+                'position' => $player_to_save[0]->position,
+                'result' => 'no',
+            ]);
+            $result->save();
+
+            $answers->country = null;
+            $answers->club = null;
+            $answers->age = null;
+            $answers->position = null;
+            $answers->save();
         }else{
             if($request->answer && !$answers->country){
                 $answers->country = $request->answer;
@@ -58,10 +79,18 @@ class Adivinador extends Component
                     where('club', $answers->club)->
                     where('position', $answers->position)->get();
 
+                    // dd($player);
 
-                $player_name = $player[0]->name;
+                if( empty($player) ){
+                    $player_name = $player[0]->name;
+                }else{
+                    $answers->country = null;
+                    $answers->club = null;
+                    $answers->age = null;
+                    $answers->position = null;
+                    $answers->save();
+                }
 
-                // dd($player);
             }
             $answers->save();
         }
